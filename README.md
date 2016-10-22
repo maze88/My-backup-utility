@@ -5,6 +5,7 @@ The program is designed to halve my work managing pictures I collect (stored tem
 To go into a bit more detail, the sub-dirs of my 'Pictures' dir are indexed when the script runs. Then the program scans my 'To-backup' dir (which basically contains any new pictures I collected) and checks the pictures' locations using the index, then moves them to their appropriate sub-dirs under my 'Backup' dir.
 
 The program requires three input dirs to work:
+
 1. new_things_dir = '~/To backup'
 2. my_pic_dir = '~/Pictures'
 3. backup_pic_dir = '.../Backup'
