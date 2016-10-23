@@ -1,12 +1,11 @@
- -*- coding: utf8 -*-
-
 import hashlib, sys, os, shutil
+from config_parser import get_dirs
 
-new_things_dir='C:\Users\Maze\Desktop\To backup'
-my_pic_dir='C:\Users\Maze\Pictures'
-backup_pic_dir='F:\BACKUP_0526840900\Pictures'
-my_stuff_dir='C:\STUFF'
-backup_stuff_dir='F:\BACKUP_0526840900\Stuff'
+#reading configuration file to get user defined dirs.
+dirs=get_dirs()
+new_things_dir=dirs['new_things_dir']
+my_pic_dir=dirs['my_pic_dir']
+backup_pic_dir=dirs['backup_pic_dir']
 
 def main():
     #return hash of file bytes.
@@ -20,37 +19,37 @@ def main():
                 buf=afile.read(blocksize)
         return hasher.hexdigest()
 
-    #generate dictionary where hash(file)=key and path(file)=value. 
+    #generate index dictionary where hashhex(file)=key and path(file)=value. 
+    print('Generating hash index of picture dir, this could take several minutes depending on its size...')
     path_hash={}
     for root, dirs, files in os.walk(unicode(my_pic_dir)):
         for file in files:
             path_hash[hashhex(os.path.join(root,file))]=os.path.join(root,file)
+    print('[+] File index complete!\n')
 
-    #describe forthcoming action.
-    print('\nRunning backup utility:')
-    print('moving all files from: "%s" to their appropriate subdirectories under: "%s" (subdirectories\' paths based on paths from "%s")' % (new_things_dir,backup_pic_dir,my_pic_dir))
-
-    #take action.
-    report=['done.\n\nprinting report:']
+    #backup process:
+    print('Moving all files from: "%s" to their appropriate subdirectories under: "%s" (subdirectories\' paths based on paths from "%s")...' % (new_things_dir,backup_pic_dir,my_pic_dir))
+    report=['Done!\n\nPrinting report:']
     for file in os.listdir(unicode(new_things_dir)):
         if hashhex(os.path.join(new_things_dir,file)) in path_hash:
             src=os.path.join(new_things_dir,file)
             des=os.path.join(backup_pic_dir+path_hash[hashhex(os.path.join(new_things_dir,file))][len(my_pic_dir):])
             try:
 		shutil.move(src,des)
-        	report.append('[+] file backed up: %s' % file)
+		report.append('[+] file backed up: %s' % file)
 	    except IOError:
-		report.append('[-] ERROR: no such directory %s.' % des)
+		report.append('[-] ERROR: No such directory %s.' % des)
         else:
-            report.append('[-] ERROR: not yet placed in pic library: %s' % file)
+            report.append('[-] ERROR: Not yet placed in pic library: %s' % file)
 
     #print report.
     if len(report)>1:
 	for entry in report:
 	    print(entry)
     else:
-	print('[-] ERROR: no files to backup found in %s' % new_things_dir)
-    print('\nback utility has finished running.')
+	print('[-] ERROR: No files to backup found in %s.' % new_things_dir)
+    print('\nBack utility has finished running.\n')
 
 if __name__=='__main__':
     main()
+
