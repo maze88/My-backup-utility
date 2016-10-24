@@ -1,27 +1,40 @@
 import ConfigParser
 
+dir_types=['new_things_dir','my_pic_dir','backup_pic_dir']
+
 def get_dirs():
-    config=ConfigParser.RawConfigParser()
+    config=ConfigParser.SafeConfigParser()
     config.read('dirs.cfg')
-    dirs={'new_things_dir':config.get('user','new_things_dir'),
-          'my_pic_dir':config.get('user','my_pic_dir'),
-          'backup_pic_dir':config.get('user','backup_pic_dir')
-	 }
-    if '' in dirs.values():
-	set_dirs()
-	get_dirs()
+    dirs={}
+    for dir in dir_types:
+        dirs[dir]=config.get('user',dir)
 
     return dirs
 
 def set_dirs():
-    pass
-    #this function should prompt the user for empty values and write them to the config file.
-    #if this user inserts an empty value, do not write - leave the current value in the config file.
+    config=ConfigParser.RawConfigParser()
+    config.read('dirs.cfg')
+    for dir in dir_types:
+        try:
+	    dirs[dir]=config.get('user',dir)
+	except:
+	    pass
+    print('Configuring directories...\n\'my_pic_dir\' - the dir you store your pictures in.')
+    print('\'backup_pic_dir\' - the dir you store your pictures\' backups in.')
+    print('\'new_things_dir\' - the dir you temporarily store your new pictures in.\n')
+    for key in [key for key,value in dirs.items() if value=='']:
+	config.set('user',key,raw_input('Please enter full path of direcory for \'%s\' value: ' % key))
+    with open('dirs.cfg','wb') as cfg_file:
+	config.write(cfg_file)
 
 def main():
-    print('Current directories configured:')
-    for key, value in get_dirs().items():
-        print('[+] %s: "%s"' % (key,value))
+    if '' in get_dirs().values():
+	set_dirs()
+	main()
+    else:
+        print('Current directories configured:')
+        for key, value in get_dirs().items():
+            print('[+] %s: "%s"' % (key,value))
 
 if __name__=='__main__':
     main()

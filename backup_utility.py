@@ -1,13 +1,12 @@
-import hashlib, sys, os, shutil
-from config_parser import get_dirs
-
-#reading configuration file to get user defined dirs.
-dirs=get_dirs()
-new_things_dir=dirs['new_things_dir']
-my_pic_dir=dirs['my_pic_dir']
-backup_pic_dir=dirs['backup_pic_dir']
+import hashlib, sys, os, shutil, config_parser
 
 def main():
+    #reading configuration file to get user defined dirs.
+    dirs=config_parser.get_dirs()
+    new_things_dir=dirs['new_things_dir']
+    my_pic_dir=dirs['my_pic_dir']
+    backup_pic_dir=dirs['backup_pic_dir']
+
     #return hash of file bytes.
     def hashhex(filepath):
         blocksize=2**10
