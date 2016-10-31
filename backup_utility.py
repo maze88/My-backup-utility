@@ -1,4 +1,9 @@
-import hashlib, sys, os, shutil, config_parser
+import sys
+import os
+import shutil
+import hashlib
+
+import parse_config #module in local dir
 
 def main():
     #reading configuration file to get user defined dirs.

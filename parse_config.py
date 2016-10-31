@@ -23,7 +23,7 @@ def set_dirs():
     print('\'backup_pic_dir\' - the dir you store your pictures\' backups in.')
     print('\'new_things_dir\' - the dir you temporarily store your new pictures in.\n')
     for key in [key for key,value in dirs.items() if value=='']:
-	config.set('user',key,raw_input('Please enter full path of direcory for \'%s\' value: ' % key))
+	config.set('user',key,raw_input('Please enter full path of direcory for \'{}\' value: '.format(key)))
     with open('dirs.cfg','wb') as cfg_file:
 	config.write(cfg_file)
 
@@ -34,7 +34,7 @@ def main():
     else:
         print('Current directories configured:')
         for key, value in get_dirs().items():
-            print('[+] %s: "%s"' % (key,value))
+            print('[+] {}: "{}"'.format(key,value))
 
 if __name__=='__main__':
     main()
