@@ -7,7 +7,7 @@ import parse_config # local module
 
 
 def hashhex(filepath):
-    ```Returns the hash of a file <filepath> in hex format.```
+    """Returns the hash of a file <filepath> in hex format."""
 
     blocksize = 2**10
     hasher = hashlib.md5()
@@ -20,9 +20,9 @@ def hashhex(filepath):
 
 
 def index_pics(dir):
-    ```Generates a dictionary of the designated my_pic_dir,
+    """Generates a dictionary of the designated my_pic_dir,
     using the hashhex(filepath) result as the key, and the filepath as the value.
-    ```
+    """
 
     dir_hash = {}
     for root, dirs, files in os.walk(unicode(dir)):
@@ -33,7 +33,7 @@ def index_pics(dir):
 
 
 def main():
-    dirs = config_parser.get_dirs()
+    dirs = parse_config.get_dirs()
     new_things_dir = dirs['new_things_dir']
     my_pic_dir = dirs['my_pic_dir']
     backup_pic_dir = dirs['backup_pic_dir']
