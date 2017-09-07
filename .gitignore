@@ -1,3 +1,5 @@
 dirs.cfg.maze
 .backup_utility2.py.swp
 __pycache__/
+testBackupDir/
+testPicDir/
