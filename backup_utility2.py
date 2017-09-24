@@ -14,9 +14,9 @@ def filePathsList(rootDir):
     return filePathsList
 
 def main():
-    print('\nRunning backup utility...')
+    print('Running backup utility...\n')
 
-    # set directories here for backup utility to use:
+    # set origin and backup dirs here for utility to use:
     originDir = '/home/maze/Documents/programming/my-backup-utility/testPicDir'
     backupDir = '/home/maze/Documents/programming/my-backup-utility/testBackupDir'
 
@@ -53,3 +53,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
