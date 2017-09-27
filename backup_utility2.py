@@ -20,12 +20,8 @@ def main():
     originDir = '/home/maze/Pictures'
     backupDir = '/media/maze/Samsung USB/Pictures'
 
-    if not os.path.exists(originDir):
-        print('[-] Specifified origin directory doesn\'t exist.\nExiting...')
-        exit()
-
-    if not os.path.exists(backupDir):
-        print('[-] Specifified backup directory doesn\'t exist.\nExiting...')
+    if not os.path.exists(originDir) or not os.path.exists(backupDir):
+        print('[-] Specifified origin and/or backup directory do not exist.\nExiting...')
         exit()
 
     print('\tOrigin directory: {}\n\tBackup directory: {}\n'.format(originDir, backupDir))
