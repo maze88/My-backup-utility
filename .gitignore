@@ -1,5 +1,4 @@
-dirs.cfg.maze
-.backup_utility2.py.swp
+.gitignore
 __pycache__/
 testBackupDir/
-testPicDir/
+testOriginDir/
